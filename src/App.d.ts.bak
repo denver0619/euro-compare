@@ -1,0 +1,6 @@
+import { ComponentType } from 'react';
+
+declare module './App.jsx' {
+    const App: ComponentType<any>;
+    export default App;
+}
