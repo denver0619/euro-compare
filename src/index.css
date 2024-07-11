@@ -1,41 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 #root,
 .app,
 body,
 html,
 .content {
-  height: 100%;
-  width: 100%;
-  font-family: "Montserrat",sans-serif;
+    height: 100%;
+    width: 100%;
+    font-family: "Montserrat", sans-serif;
 }
 
 /* Removes unnecessary scroll bar */
-html, body {
-  margin: 0;
+html,
+body {
+    margin: 0;
 }
 
 .app {
-  display: flex;
-  position: relative;
+    display: flex;
+    position: relative;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+    width: 10px;
 }
 
 /* Track Style */
 ::-webkit-scrollbar-track {
-  background: #e0e0e0;
+    background: #e0e0e0;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+    background: #888;
 }
 
 /* Handle on Hover */
 ::-webkit-scrollbar-track:hover {
-  background: #555;
+    background: #555;
+}
+
+/* Sidebar Contents */
+.sidebar-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 0px 10px 0px 10px;
 }

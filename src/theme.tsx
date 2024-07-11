@@ -4,15 +4,16 @@ import { PaletteMode, Theme } from "@mui/material";
 import * as colorData from "../src/assets/material-theme.json";
 
 // color tokens
-// export const colorTokens = (mode: String) =>  ({
-//     ...(mode === "dark"
-//         ? colorData.schemes.dark
-//         : colorData.schemes.light
-//     )
-// })
+export const colorTokens = (mode: String) =>  ({
+    ...(mode === "dark"
+        ? colorData.schemes.dark
+        : colorData.schemes.light
+    )
+})
 
 // mui theme settings
 export const themeSettings = (mode: String) => {
+    const colors = colorTokens(mode);
     return {
         palette: {
             mode: mode as PaletteMode,
