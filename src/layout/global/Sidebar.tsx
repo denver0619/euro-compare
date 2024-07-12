@@ -1,161 +1,90 @@
-import { useState } from "react";
-import {
-    useTheme,
-    Box,
-    Drawer,
-    Typography,
-    Theme,
-    CSSObject,
-    styled,
-    IconButton,
-    Divider,
-    ButtonBase,
-} from "@mui/material";
-import { useContext } from "react";
-import { ColorModeContext, colorTokens } from "../../theme";
+import { useEffect, useState } from "react";
+import { useTheme, Box, IconButton, Typography, Divider } from "@mui/material";
+import { colorTokens } from "../../theme";
+import { Sidebar, Menu, MenuItem, menuClasses } from "react-pro-sidebar";
+import { Link } from "react-router-dom";
 import {
     MenuOutlined,
     MenuOpenOutlined,
     DashboardOutlined,
 } from "@mui/icons-material";
 
-const drawerWidth = 240;
-
-const openedMixin = (theme: Theme): CSSObject => ({
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-    }),
-    overflowX: "hidden",
-});
-
-const closedMixin = (theme: Theme): CSSObject => ({
-    transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: "hidden",
-    width: `calc(${theme.spacing(6)} + 1px)`,
-    [theme.breakpoints.up("sm")]: {
-        width: `calc(${theme.spacing(6)} + 1px)`,
-    },
-});
-
-const MiniDrawer = styled(Drawer, {
-    shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: "nowrap",
-    boxSizing: "border-box",
-    background: colorTokens(theme.palette.mode).secondary,
-    ...(open && {
-        ...openedMixin(theme),
-        "& .MuiDrawer-paper": openedMixin(theme),
-    }),
-    ...(!open && {
-        ...closedMixin(theme),
-        "& .MuiDrawer-paper": closedMixin(theme),
-    }),
-}));
-
-const ItemButton = styled(ButtonBase)(({ theme }) => ({
-    width: "100%",
-    minHeight: "40px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    padding: "0px 10px 0px 10px",
-}));
-
-function Sidebar() {
+const Item = ({ title, to, icon, selected, setSelected }) => {
     const theme = useTheme();
     const colors = colorTokens(theme.palette.mode);
-    const [open, setOpen] = useState(false);
+    return (
+        <MenuItem active={selected === title}>
+            <Typography></Typography>
+            <Link></Link>
+        </MenuItem>
+    );
+};
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+function SidebarComponent() {
+    const theme = useTheme();
+    const colors = colorTokens(theme.palette.mode);
+    const [isCollapsed, setIsCollapsed] = useState(false);
+    const [selected, setSelected] = useState("Dashboard");
 
     return (
-        <Box sx={{ display: "flex" }}>
-            <MiniDrawer
-                anchor="left"
-                variant="permanent"
-                open={open}
-                sx={{
-                    "& .MuiDrawer-paper": {
-                        backgroundColor: colors.surfaceContainer,
-                    },
+        <Box>
+            <Sidebar
+                backgroundColor={colors.surfaceContainer}
+                rootStyles={{
+                    height: "100%",
                 }}
+                collapsed={isCollapsed}
             >
-                {open ? (
-                    <Box alignItems="left" role="presentation">
-                        <Box display="flex" alignItems="center">
-                            <IconButton onClick={handleDrawerClose}>
-                                <MenuOpenOutlined></MenuOpenOutlined>
-                            </IconButton>
-                            <Typography variant="h5">Menu</Typography>
-                        </Box>
-                        <Divider
-                            sx={{
-                                margin: "5px",
-                            }}
-                        />
-                        <Box alignItems="left" role="presentation">
-                            <ItemButton
-                                sx={{
-                                    ":hover": {
-                                        backgroundColor: colors.surfaceBright,
-                                    },
-                                }}
+                <Menu>
+                    {/* Header, Collapse Toggle */}
+                    <MenuItem
+                        style={{
+                            backgroundColor: colors.surfaceContainer,
+                        }}
+                    >
+                        {isCollapsed ? (
+                            <Box
+                                display="flex"
+                                alignItems="center"
+                                justifyContent="space-between"
                             >
-                                <DashboardOutlined
-                                    sx={{ marginRight: "10px" }}
-                                ></DashboardOutlined>
-                                <Typography variant="h6">Dashboard</Typography>
-                            </ItemButton>
-                        </Box>
-                    </Box>
-                ) : (
-                    <Box alignItems="left" role="presentation">
-                        <Box>
-                            <IconButton onClick={handleDrawerOpen}>
-                                <MenuOutlined></MenuOutlined>
-                            </IconButton>
-                        </Box>
-                        <Divider
-                            sx={{
-                                margin: "5px",
-                            }}
-                        />
-
-                        <Box
-                            alignItems="center"
-                            justifyContent="center"
-                            justifyItems="center"
-                            role="presentation"
-                        >
-                            <ItemButton
-                                sx={{
-                                    ":hover": {
-                                        backgroundColor: colors.surfaceBright,
-                                    },
-                                }}
+                                <Typography variant="h5"></Typography>
+                                <IconButton
+                                    onClick={() =>
+                                        setIsCollapsed(
+                                            isCollapsed ? false : true
+                                        )
+                                    }
+                                >
+                                    <MenuOutlined></MenuOutlined>
+                                </IconButton>
+                            </Box>
+                        ) : (
+                            <Box
+                                display="flex"
+                                alignItems="center"
+                                justifyContent="space-between"
                             >
-                                <DashboardOutlined></DashboardOutlined>
-                            </ItemButton>
-                        </Box>
-                    </Box>
-                )}
-            </MiniDrawer>
+                                <Typography variant="h5">Menu</Typography>
+                                <IconButton
+                                    onClick={() =>
+                                        setIsCollapsed(
+                                            isCollapsed ? false : true
+                                        )
+                                    }
+                                >
+                                    <MenuOpenOutlined></MenuOpenOutlined>
+                                </IconButton>
+                            </Box>
+                        )}
+                    </MenuItem>
+                    <Divider></Divider>
+                    {/* Menu */}
+                    <Box></Box>
+                </Menu>
+            </Sidebar>
         </Box>
     );
 }
 
-export default Sidebar;
+export default SidebarComponent;
