@@ -1,5 +1,12 @@
-import { useEffect, useState } from "react";
-import { useTheme, Box, IconButton, Typography, Divider } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {
+    useTheme,
+    Box,
+    IconButton,
+    Typography,
+    Divider,
+    CssBaseline,
+} from "@mui/material";
 import { colorTokens } from "../../theme";
 import { Sidebar, Menu, MenuItem, menuClasses } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
@@ -7,16 +14,50 @@ import {
     MenuOutlined,
     MenuOpenOutlined,
     DashboardOutlined,
+    ShoppingCartOutlined,
+    TravelExploreOutlined,
+    InfoOutlined,
+    PublicOutlined,
 } from "@mui/icons-material";
 
-const Item = ({ title, to, icon, selected, setSelected }) => {
+interface ItemProps {
+    title: string;
+    to: string;
+    icon: React.ReactNode;
+    selected: string;
+    setSelected: (selected: string) => void;
+}
+
+const Item: React.FC<ItemProps> = ({
+    title,
+    to,
+    icon,
+    selected,
+    setSelected,
+}) => {
     const theme = useTheme();
     const colors = colorTokens(theme.palette.mode);
     return (
-        <MenuItem active={selected === title}>
-            <Typography></Typography>
-            <Link></Link>
-        </MenuItem>
+        <Link
+            to={to}
+            style={{
+                color: colors.onSurface,
+                textDecoration: "none",
+            }}
+        >
+            <CssBaseline />
+            <MenuItem
+                active={selected === title}
+                onClick={() => {
+                    setSelected(title);
+                    console.log(title);
+                }}
+                icon={icon}
+                disabled={false}
+            >
+                <Typography variant="h6">{title}</Typography>
+            </MenuItem>
+        </Link>
     );
 };
 
@@ -35,11 +76,21 @@ function SidebarComponent() {
                 }}
                 collapsed={isCollapsed}
             >
-                <Menu>
+                <Menu
+                    menuItemStyles={{
+                        button: {
+                            "&:hover": {
+                                backgroundColor: colors.primary,
+                                color: colors.onPrimary,
+                            },
+                        },
+                    }}
+                >
                     {/* Header, Collapse Toggle */}
                     <MenuItem
                         style={{
                             backgroundColor: colors.surfaceContainer,
+                            color: colors.onSurface,
                         }}
                     >
                         {isCollapsed ? (
@@ -50,6 +101,9 @@ function SidebarComponent() {
                             >
                                 <Typography variant="h5"></Typography>
                                 <IconButton
+                                    sx={{
+                                        color: colors.onSurface,
+                                    }}
                                     onClick={() =>
                                         setIsCollapsed(
                                             isCollapsed ? false : true
@@ -67,6 +121,9 @@ function SidebarComponent() {
                             >
                                 <Typography variant="h5">Menu</Typography>
                                 <IconButton
+                                    sx={{
+                                        color: colors.onSurface,
+                                    }}
                                     onClick={() =>
                                         setIsCollapsed(
                                             isCollapsed ? false : true
@@ -80,6 +137,34 @@ function SidebarComponent() {
                     </MenuItem>
                     <Divider></Divider>
                     {/* Menu */}
+                    <Item
+                        title="Dashboard"
+                        to="/"
+                        icon={<DashboardOutlined />}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
+                    <Item
+                        title="Comparison"
+                        to="/country-comparison"
+                        icon={<PublicOutlined />}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
+                    <Item
+                        title="Lifestyle"
+                        to="/lifestyle"
+                        icon={<ShoppingCartOutlined />}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
+                    <Item
+                        title="About"
+                        to="/about"
+                        icon={<InfoOutlined />}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
                     <Box></Box>
                 </Menu>
             </Sidebar>

@@ -3,7 +3,10 @@ import { CssBaseline, ThemeProvider, Box } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
 import TopbarComponent from "./layout/global/Topbar";
 import SidebarComponent from "./layout/global/Sidebar";
-import Dashboard from "./layout/dashboard/Dashboard";
+import Dashboard from "./layout/dashboard";
+import CountryComparison from "./layout/country-comparison";
+import Lifestyle from "./layout/lifestyle";
+import About from "./layout/about";
 
 function App() {
     const [theme, colorMode] = useMode();
@@ -18,7 +21,14 @@ function App() {
                     <Box component="main" className="content">
                         <TopbarComponent></TopbarComponent>
                         <Routes>
+                            <Route index element={<Dashboard />}></Route>
                             <Route path="/" element={<Dashboard />} />
+                            <Route
+                                path="/country-comparison"
+                                element={<CountryComparison />}
+                            />
+                            <Route path="/lifestyle" element={<Lifestyle />} />
+                            <Route path="/about" element={<About />} />
                         </Routes>
                     </Box>
                     {/* <main className="content">
