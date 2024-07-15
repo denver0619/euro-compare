@@ -5,7 +5,6 @@ import { colorTokens } from "../../theme";
 function Dashboard() {
     const theme = useTheme();
     const colors = colorTokens(theme.palette.mode);
-
     return (
         <Box
             sx={{

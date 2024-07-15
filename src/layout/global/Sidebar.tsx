@@ -48,6 +48,14 @@ const Item: React.FC<ItemProps> = ({
             <CssBaseline />
             <MenuItem
                 active={selected === title}
+                rootStyles={
+                    selected === title
+                        ? {
+                              backgroundColor: colors.primary,
+                              color: colors.onPrimary,
+                          }
+                        : {}
+                }
                 onClick={() => {
                     setSelected(title);
                     console.log(title);
@@ -80,8 +88,8 @@ function SidebarComponent() {
                     menuItemStyles={{
                         button: {
                             "&:hover": {
-                                backgroundColor: colors.primary,
-                                color: colors.onPrimary,
+                                backgroundColor: colors.primaryContainer,
+                                color: colors.onPrimaryContainer,
                             },
                         },
                     }}
