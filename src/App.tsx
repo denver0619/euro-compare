@@ -1,41 +1,50 @@
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider, Box } from "@mui/material";
-import { Routes, Route } from "react-router-dom";
-import TopbarComponent from "./layout/global/Topbar";
-import SidebarComponent from "./layout/global/Sidebar";
-import Dashboard from "./layout/dashboard";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { auth } from "./services/firebase/firebase";
+import { AuthContextProvider } from "./contexts/authContext";
+import { GlobalContextProvider } from "./contexts/globalContext";
 import CountryComparison from "./layout/country-comparison";
 import Lifestyle from "./layout/lifestyle";
 import About from "./layout/about";
+import HomeLayout from "./layout/home";
+import MainApp from "./layout/main";
+import AuthenticationLayout from "./layout/authentication";
 
 function App() {
     const [theme, colorMode] = useMode();
+    const navigate = useNavigate();
+
+    const user = auth.currentUser;
 
     return (
-        <ColorModeContext.Provider value={colorMode}>
-            <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <div className="app">
-                    <SidebarComponent></SidebarComponent>
-
-                    <Box component="main" className="content">
-                        <TopbarComponent></TopbarComponent>
+        <GlobalContextProvider>
+            <AuthContextProvider>
+                <ColorModeContext.Provider value={colorMode}>
+                    <ThemeProvider theme={theme}>
+                        <CssBaseline />
                         <Routes>
-                            <Route index element={<Dashboard />}></Route>
-                            <Route path="/" element={<Dashboard />} />
                             <Route
-                                path="/country-comparison"
-                                element={<CountryComparison />}
-                            />
-                            <Route path="/lifestyle" element={<Lifestyle />} />
-                            <Route path="/about" element={<About />} />
+                                path="/authenticate"
+                                element={<AuthenticationLayout />}
+                            ></Route>
+                            <Route path="/" element={<MainApp />}>
+                                <Route index element={<HomeLayout />} />
+                                <Route
+                                    path="/country-comparison"
+                                    element={<CountryComparison />}
+                                />
+                                <Route
+                                    path="/lifestyle"
+                                    element={<Lifestyle />}
+                                />
+                                <Route path="/about" element={<About />} />
+                            </Route>
                         </Routes>
-                    </Box>
-                    {/* <main className="content">
-              </main> */}
-                </div>
-            </ThemeProvider>
-        </ColorModeContext.Provider>
+                    </ThemeProvider>
+                </ColorModeContext.Provider>
+            </AuthContextProvider>
+        </GlobalContextProvider>
     );
 }
 

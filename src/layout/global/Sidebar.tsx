@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import {
     MenuOutlined,
     MenuOpenOutlined,
-    DashboardOutlined,
+    HomeOutlined,
     ShoppingCartOutlined,
     TravelExploreOutlined,
     InfoOutlined,
@@ -146,9 +146,9 @@ function SidebarComponent() {
                     <Divider></Divider>
                     {/* Menu */}
                     <Item
-                        title="Dashboard"
+                        title="Home"
                         to="/"
-                        icon={<DashboardOutlined />}
+                        icon={<HomeOutlined />}
                         selected={selected}
                         setSelected={setSelected}
                     />

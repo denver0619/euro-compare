@@ -1,4 +1,11 @@
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    getBlob,
+    getBytes,
+} from "firebase/storage";
 import { app } from "../firebase";
 
 const storage = getStorage(app);
@@ -24,11 +31,18 @@ class StorageHelper {
     // }
 
     static async downloadJsonData(path: string) {
-        const datasetRef = ref(this.getRootRef(), path + "/");
-        const url = await getDownloadURL(datasetRef);
-        const response = await fetch(url);
-        const json = await response.json();
-        return json;
+        const datasetRef = ref(this.getRootRef(), path);
+
+        try {
+            const bytes = await getBytes(datasetRef);
+            const jsonString = new TextDecoder().decode(bytes);
+            const json = JSON.parse(jsonString);
+            console.log(json);
+            return json;
+        } catch (error) {
+            console.error("Error fetching JSON data:", error);
+            throw error;
+        }
     }
 }
 

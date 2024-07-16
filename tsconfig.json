@@ -1,17 +1,17 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.node.json"
+    "files": [],
+    "references": [
+        {
+            "path": "./tsconfig.app.json"
+        },
+        {
+            "path": "./tsconfig.node.json"
+        }
+    ],
+    "compilerOptions": {
+        "typeRoots": ["./src/types"],
+        "esModuleInterop": true,
+        "allowJs": true,
+        "checkJs": true
     }
-  ],
-  "compilerOptions": {
-    "typeRoots": ["./src"],
-    "esModuleInterop": true,
-    "allowJs": true,
-    "checkJs": true
-  }
 }
