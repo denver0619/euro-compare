@@ -18,10 +18,10 @@ function App() {
     const user = auth.currentUser;
 
     return (
-        <GlobalContextProvider>
-            <AuthContextProvider>
-                <ColorModeContext.Provider value={colorMode}>
-                    <ThemeProvider theme={theme}>
+        <ColorModeContext.Provider value={colorMode}>
+            <ThemeProvider theme={theme}>
+                <GlobalContextProvider>
+                    <AuthContextProvider>
                         <CssBaseline />
                         <Routes>
                             <Route
@@ -41,10 +41,10 @@ function App() {
                                 <Route path="/about" element={<About />} />
                             </Route>
                         </Routes>
-                    </ThemeProvider>
-                </ColorModeContext.Provider>
-            </AuthContextProvider>
-        </GlobalContextProvider>
+                    </AuthContextProvider>
+                </GlobalContextProvider>
+            </ThemeProvider>
+        </ColorModeContext.Provider>
     );
 }
 

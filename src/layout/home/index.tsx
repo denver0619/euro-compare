@@ -1,37 +1,19 @@
 import Header from "../../components/Header";
 import { Box, useTheme } from "@mui/material";
 import { colorTokens } from "../../theme";
-import StorageHelper from "../../services/firebase/storage/StorageHelper";
 import { useGlobal } from "../../contexts/globalContext";
-import { useEffect, useState } from "react";
+import { Eurostat } from "../../services/eurostat/eurostat";
+import * as ppp from "../../assets/prc_ppp_ind.json";
 
 function HomeLayout() {
     const theme = useTheme();
     const colors = colorTokens(theme.palette.mode);
     const global = useGlobal();
-    const [dataset, setDataset] = useState(null);
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
+    const eurostat = new Eurostat(ppp);
 
-    // useEffect(() => {
-    //     const fetchDataset = async () => {
-    //         try {
-    //             const data = StorageHelper.downloadJsonData(
-    //                 global.datasets.prc_ppp_ind
-    //             );
-    //             const jsonstatdata = await JSONstat(data);
-    //             setDataset(jsonstatdata);
-    //         } catch (err) {
-    //             if (err instanceof Error) {
-    //                 setError(err.message);
-    //             } else {
-    //                 setError("An unknown error occurred");
-    //             }
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
-    // }, []);
+    eurostat.getIndexList().forEach((element: any) => {
+        console.log(eurostat.getDimensionLabels(element));
+    });
 
     return (
         <Box
